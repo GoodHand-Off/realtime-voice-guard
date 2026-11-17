@@ -1,6 +1,6 @@
-# realtime-voice-guard
+# realtime-voice-guard: time and spend limits for OpenAI Realtime API calls
 
-**Stop a voice AI call from running up your bill.** A small Node service that sits between your app and the OpenAI Realtime API, gives every call a time limit and a spend limit, and hangs up on OpenAI's side when either one is reached. Your OpenAI key never leaves the server.
+**Stop an OpenAI Realtime API call from running up your bill.** A small Node service that sits between your app and the OpenAI Realtime API, gives every call its own time limit and spend limit, and hangs up on OpenAI's side when either one is reached. Your OpenAI key never leaves the server.
 
 A browser tab left open next to a TV can keep a Realtime session talking for up to OpenAI's 60-minute session limit. Under the assumptions below, that one call costs about $5 on `gpt-realtime-2.1` if prompt caching works, and about $158 if it doesn't. With the guard's default caps it ends at 10 minutes, and every response reserves the most it can cost, so the call hangs up while one more response would still fit. Through the WebSocket relay that keeps estimated spend at or under $1. In WebRTC mode the browser talks to OpenAI directly and can add to that; [The bound](#the-bound) says exactly what each mode covers.
 
@@ -201,7 +201,7 @@ Not verified without a live call, so the bound rests on these:
 
 ## Limits and costs
 
-### What a call costs
+### What an OpenAI Realtime call costs per minute
 
 OpenAI's Realtime models bill per token, and voice is expensive tokens. OpenAI's cost guide gives the conversion: user audio is 1 token per 100 ms (600 tokens a minute), and assistant audio is 1 token per 50 ms (1,200 a minute). At the prices in `prices.json`:
 
@@ -264,6 +264,12 @@ Set `REDIS_URL` to run the ledger tests against a real Redis too. See [CONTRIBUT
 
 ---
 
-**Built by GoodHandoff.** We build and run the automation that carries a home service company's jobs from the first call to the final payment, inside its own CRM, phone and texting tools. We wrote this guard so an AI voice call in that chain stays inside its time and spend limits. More at [goodhandoff.com](https://goodhandoff.com/?utm_source=github&utm_medium=readme&utm_campaign=realtime-voice-guard).
+## Why we built it, and why it's free
+
+Getting a voice agent to talk is quick now. Deciding when it should stop, and what a single call is allowed to cost, is the part the demos skip. We needed that answer for the AI phone work we do for home service companies, so we wrote it as code and published it.
+
+That's how we see the job in general: AI made software cheap to write. It didn't make it any easier to run well inside a real business. The code is free. The handoff is the work.
+
+**GoodHandoff** builds and runs the automation that carries a home service company's jobs from the first call to the final payment, inside its own CRM, phone and texting tools: [goodhandoff.com](https://goodhandoff.com/?utm_source=github&utm_medium=readme&utm_campaign=realtime-voice-guard&utm_content=footer).
 
 Apache-2.0. See [LICENSE](LICENSE), [NOTICE](NOTICE) and [TRADEMARKS.md](TRADEMARKS.md). Not affiliated with OpenAI.
