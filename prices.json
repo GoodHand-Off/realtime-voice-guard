@@ -1,0 +1,132 @@
+{
+  "source": "https://developers.openai.com/api/docs/pricing",
+  "checked": "2026-11-17",
+  "notes": [
+    "USD per 1M tokens, copied from the Realtime & Audio and Transcription tables on the source page on the date in `checked`.",
+    "per_minute is USD per minute of audio, for transcription models that report usage as a duration.",
+    "OpenAI changes prices. Check the source page and edit this file, or point PRICES_FILE at your own copy.",
+    "gpt-realtime and gpt-realtime-mini are deprecated (shutdown 2027-01-20); gpt-4o-transcribe, gpt-4o-mini-transcribe and whisper-1 are deprecated (shutdown 2027-02-26). See https://developers.openai.com/api/docs/deprecations"
+  ],
+  "models": {
+    "gpt-realtime-2.1": {
+      "text": {
+        "input": 4.0,
+        "cached_input": 0.4,
+        "output": 24.0
+      },
+      "audio": {
+        "input": 32.0,
+        "cached_input": 0.4,
+        "output": 64.0
+      },
+      "image": {
+        "input": 5.0,
+        "cached_input": 0.5
+      }
+    },
+    "gpt-realtime-2.1-mini": {
+      "text": {
+        "input": 0.6,
+        "cached_input": 0.06,
+        "output": 2.4
+      },
+      "audio": {
+        "input": 10.0,
+        "cached_input": 0.3,
+        "output": 20.0
+      },
+      "image": {
+        "input": 0.8,
+        "cached_input": 0.08
+      }
+    },
+    "gpt-realtime-2": {
+      "text": {
+        "input": 4.0,
+        "cached_input": 0.4,
+        "output": 24.0
+      },
+      "audio": {
+        "input": 32.0,
+        "cached_input": 0.4,
+        "output": 64.0
+      },
+      "image": {
+        "input": 5.0,
+        "cached_input": 0.5
+      }
+    },
+    "gpt-realtime-1.5": {
+      "text": {
+        "input": 4.0,
+        "cached_input": 0.4,
+        "output": 16.0
+      },
+      "audio": {
+        "input": 32.0,
+        "cached_input": 0.4,
+        "output": 64.0
+      },
+      "image": {
+        "input": 5.0,
+        "cached_input": 0.5
+      }
+    },
+    "gpt-realtime": {
+      "text": {
+        "input": 4.0,
+        "cached_input": 0.4,
+        "output": 16.0
+      },
+      "audio": {
+        "input": 32.0,
+        "cached_input": 0.4,
+        "output": 64.0
+      },
+      "image": {
+        "input": 5.0,
+        "cached_input": 0.5
+      }
+    },
+    "gpt-realtime-mini": {
+      "text": {
+        "input": 0.6,
+        "cached_input": 0.06,
+        "output": 2.4
+      },
+      "audio": {
+        "input": 10.0,
+        "cached_input": 0.3,
+        "output": 20.0
+      },
+      "image": {
+        "input": 0.8,
+        "cached_input": 0.08
+      }
+    }
+  },
+  "transcription": {
+    "gpt-transcribe": {
+      "per_minute": 0.0045
+    },
+    "gpt-4o-transcribe": {
+      "input": 2.5,
+      "output": 10.0,
+      "per_minute": 0.006
+    },
+    "gpt-4o-mini-transcribe": {
+      "input": 1.25,
+      "output": 5.0,
+      "per_minute": 0.003
+    },
+    "whisper-1": {
+      "per_minute": 0.006
+    },
+    "gpt-realtime-whisper": {
+      "per_minute": 0.017
+    },
+    "gpt-live-transcribe": {
+      "per_minute": 0.017
+    }
+  }
+}

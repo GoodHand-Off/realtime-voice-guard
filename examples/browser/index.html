@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>realtime-voice-guard example</title>
+  <style>
+    body { font: 16px/1.5 system-ui, sans-serif; max-width: 40rem; margin: 2rem auto; padding: 0 1rem; }
+    button { font: inherit; padding: .5rem 1rem; margin-right: .5rem; }
+    #status { font-weight: 600; }
+    pre { background: #f4f4f4; padding: 1rem; overflow-x: auto; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>Guarded voice call</h1>
+  <p>The guard ends this call after 120 seconds or $0.25 of estimated spend, whichever comes first, and hangs up on OpenAI's side.</p>
+  <button id="start">Start call</button><button id="stop" disabled>Hang up</button>
+  <p>Status: <span id="status">idle</span> · Time left: <span id="left">-</span></p>
+  <pre id="result">The settled call record appears here.</pre>
+  <script type="module">
+    const $ = (id) => document.getElementById(id);
+    let pc, timer, callId;
+
+    function setStatus(text) { $("status").textContent = text; }
+
+    async function start() {
+      $("start").disabled = true;
+      setStatus("getting a ticket");
+      // 1. Your backend asks the guard for a ticket. The OpenAI key never reaches the browser.
+      const ticket = await (await fetch("/session", { method: "POST" })).json();
+      if (!ticket.value) throw new Error(ticket.error?.message ?? "No ticket");
+      callId = ticket.call_id;
+
+      // 2. Ordinary OpenAI WebRTC setup.
+      pc = new RTCPeerConnection();
+      const speaker = new Audio();
+      speaker.autoplay = true;
+      pc.ontrack = (event) => { speaker.srcObject = event.streams[0]; };
+      const mic = await navigator.mediaDevices.getUserMedia({ audio: true });
+      pc.addTrack(mic.getTracks()[0], mic);
+      const events = pc.createDataChannel("oai-events");
+      events.onclose = () => end("call ended");
+      pc.onconnectionstatechange = () => {
+        if (["failed", "closed", "disconnected"].includes(pc.connectionState)) end("call ended");
+      };
+      const offer = await pc.createOffer();
+      await pc.setLocalDescription(offer);
+
+      // 3. The only change: post the offer to the guard, with the ticket, instead of to OpenAI.
+      setStatus("connecting");
+      const answer = await fetch(`${ticket.guard_url}/v1/realtime/calls`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${ticket.value}`, "Content-Type": "application/sdp" },
+        body: offer.sdp,
+      });
+      if (!answer.ok) throw new Error(`Guard refused the call (${answer.status})`);
+      await pc.setRemoteDescription({ type: "answer", sdp: await answer.text() });
+
+      setStatus("live, say hello");
+      $("stop").disabled = false;
+      const endsAt = Date.now() + ticket.max_seconds * 1000;
+      timer = setInterval(() => { $("left").textContent = `${Math.max(0, Math.round((endsAt - Date.now()) / 1000))} s`; }, 250);
+    }
+
+    async function end(reason) {
+      if (!pc) return;
+      clearInterval(timer);
+      pc.getSenders().forEach((sender) => sender.track?.stop());
+      pc.close();
+      pc = undefined;
+      $("stop").disabled = true;
+      $("start").disabled = false;
+      setStatus(reason);
+      // 4. Read the settled record: end reason, duration and estimated cost.
+      for (let attempt = 0; attempt < 20 && callId; attempt++) {
+        const { call } = await (await fetch(`/calls/${callId}`)).json();
+        if (call?.settledAt) {
+          $("result").textContent = JSON.stringify(call, null, 2);
+          return;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      }
+    }
+
+    $("start").onclick = () => start().catch((error) => { setStatus(error.message); $("start").disabled = false; });
+    $("stop").onclick = () => end("you hung up");
+  </script>
+</body>
+</html>
