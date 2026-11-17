@@ -1,0 +1,4 @@
+# The handshake tests use the sample Sec-WebSocket-Key from RFC 6455 section 1.3
+# (base64 of "the sample nonce"). It is a published example value, not a secret.
+7e1ff62a4d869939f2f1aff549736b52d2b0eebb:test/operations.test.ts:generic-api-key:223
+7e1ff62a4d869939f2f1aff549736b52d2b0eebb:test/lifecycle.test.ts:generic-api-key:43
