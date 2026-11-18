@@ -9,7 +9,7 @@ A browser tab left open next to a TV can keep a Realtime session talking for up 
 Needs Node 22.12 or newer and an OpenAI API key with Realtime access ([create one](https://platform.openai.com/api-keys)).
 
 ```bash
-git clone https://github.com/nussbeck-labs/realtime-voice-guard && cd realtime-voice-guard && npm ci && npm run build
+git clone https://github.com/GoodHand-Off/realtime-voice-guard && cd realtime-voice-guard && npm ci && npm run build
 OPENAI_API_KEY=sk-your-key npm run setup   # writes .env with your key and two fresh random secrets
 npm start                                  # listens on http://localhost:8080
 ```
@@ -120,7 +120,7 @@ Everything is an environment variable; `.env.example` lists them all.
 
 ### Tickets you sign yourself
 
-If your backend runs Node, it can skip the `/v1/tickets` round trip and sign tickets with the shared `GUARD_SIGNING_SECRET`. The package isn't on npm yet: install it with `npm install git+https://github.com/nussbeck-labs/realtime-voice-guard.git` (its `prepare` script builds it), or copy `src/ticket.ts`, which has no dependencies. It works with `import` and, on Node 22.12 or newer, `require`.
+If your backend runs Node, it can skip the `/v1/tickets` round trip and sign tickets with the shared `GUARD_SIGNING_SECRET`. The package isn't on npm yet: install it with `npm install git+https://github.com/GoodHand-Off/realtime-voice-guard.git` (its `prepare` script builds it), or copy `src/ticket.ts`, which has no dependencies. It works with `import` and, on Node 22.12 or newer, `require`.
 
 ```ts
 import { signTicket } from "realtime-voice-guard";

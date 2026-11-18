@@ -5,7 +5,7 @@
 Please report security issues privately through GitHub's private vulnerability
 reporting: open this repository's **Security** tab and choose **Report a
 vulnerability**
-(https://github.com/nussbeck-labs/realtime-voice-guard/security/advisories/new).
+(https://github.com/GoodHand-Off/realtime-voice-guard/security/advisories/new).
 Do not open a public issue.
 
 Include the affected version, a description and, if you can, a test against the

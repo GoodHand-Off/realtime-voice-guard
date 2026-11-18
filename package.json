@@ -14,13 +14,13 @@
     "proxy",
     "typescript"
   ],
-  "homepage": "https://github.com/nussbeck-labs/realtime-voice-guard#readme",
+  "homepage": "https://github.com/GoodHand-Off/realtime-voice-guard#readme",
   "bugs": {
-    "url": "https://github.com/nussbeck-labs/realtime-voice-guard/issues"
+    "url": "https://github.com/GoodHand-Off/realtime-voice-guard/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nussbeck-labs/realtime-voice-guard.git"
+    "url": "git+https://github.com/GoodHand-Off/realtime-voice-guard.git"
   },
   "license": "Apache-2.0",
   "author": "GoodHandoff (https://goodhandoff.com)",
