@@ -266,7 +266,7 @@ Set `REDIS_URL` to run the ledger tests against a real Redis too. See [CONTRIBUT
 
 ## Why we built it, and why it's free
 
-Getting a voice agent to talk is quick now. Deciding when it should stop, and what a single call is allowed to cost, is the part the demos skip. We needed that answer for the AI phone work we do for home service companies, so we wrote it as code and published it.
+Getting a voice agent to talk is quick now. Deciding when it should stop, and what a single call is allowed to cost, is the part the demos skip. We needed that answer for the [AI phone work we do for home service companies](https://goodhandoff.com/services/ai-customer-service?utm_source=github&utm_medium=readme&utm_campaign=realtime-voice-guard&utm_content=why), so we wrote it as code and published it.
 
 That's how we see the job in general: AI made software cheap to write. It didn't make it any easier to run well inside a real business. The code is free. The handoff is the work.
 
